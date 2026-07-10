@@ -78,6 +78,7 @@ class SignUpScreen extends StatelessWidget {
                 const SizedBox(height: 18),
 
                 CustomTextField(
+                  isPhoneNumber: true,
                   controller: phone,
                   hintText: "Phone Number",
                   keyboardType: TextInputType.phone,
@@ -125,12 +126,23 @@ class SignUpScreen extends StatelessWidget {
                       );
                       return;
                     }
-                    if (phone.text.trim().length < 10) {
+                    if (email.text.trim().isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text(
-                            "Phone number should be at least 10 digits long",
-                          ),
+                          content: Text("Please enter your email address"),
+                        ),
+                      );
+                      return;
+                    }
+
+                    final emailRegex = RegExp(
+                      r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                    );
+
+                    if (!emailRegex.hasMatch(email.text.trim())) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Please enter a valid email address"),
                         ),
                       );
                       return;
@@ -150,7 +162,6 @@ class SignUpScreen extends StatelessWidget {
                       email: email.text.trim(),
                       phone: phone.text.trim(),
                       password: password.text.trim(),
-                      context: context,
                     );
                   },
                 ),

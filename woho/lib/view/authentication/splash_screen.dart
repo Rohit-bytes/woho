@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:woho/services/authentication_service.dart';
 import 'package:woho/view/authentication/loginscreen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,10 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => LoginScreen()),
-      );
+      AuthenticationService().userexist();
     });
   }
 

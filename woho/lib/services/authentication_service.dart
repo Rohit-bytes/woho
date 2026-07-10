@@ -2,16 +2,29 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:woho/view/authentication/loginscreen.dart';
+import 'package:woho/view/home/dashboard.dart';
 
 class AuthenticationService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  void userexist() {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      Get.offAll(() => Dashboard());
+    } else {
+      // User is not signed in, navigate to the login screen
+      Get.offAll(() => LoginScreen());
+    }
+  }
 
   void signin(String email, String password, BuildContext context) {
     _auth
         .signInWithEmailAndPassword(email: email, password: password)
         .then((value) {
           print("Signed in successfully");
+          Get.offAll(() => Dashboard());
         })
         .catchError((error) {
           print("Error signing in: $error");
@@ -28,44 +41,46 @@ class AuthenticationService {
     required String email,
     required String phone,
     required String password,
-    required BuildContext context,
   }) async {
-    _auth
-        .createUserWithEmailAndPassword(email: email, password: password)
-        .then((value) {
-          print("Signed up successfully");
-        })
-        .catchError((error) {
-          print("Error signing up: $error");
-          Get.snackbar(
-            "Signup Failed",
-            "${error.message}",
-            snackPosition: SnackPosition.BOTTOM,
-          );
+    try {
+      UserCredential credential = await _auth.createUserWithEmailAndPassword(
+        email: email.trim(),
+        password: password.trim(),
+      );
+
+      User? user = credential.user;
+
+      if (user != null) {
+        // Save display name in Firebase Auth
+        await user.updateDisplayName(name);
+
+        // Save additional user data in Firestore
+        await _firestore.collection('users').doc(user.uid).set({
+          'uid': user.uid,
+          'name': name.trim(),
+          'email': email.trim(),
+          'phone': phone.trim(),
+          'photoUrl': '',
+          'createdAt': FieldValue.serverTimestamp(),
         });
 
-    User? user = _auth.currentUser;
-    if (user != null) {
-      user.updateDisplayName(name);
-      user.updatePhoneNumber(phone as PhoneAuthCredential);
-      await _firestore.collection('users').doc(user.uid).set({
-        'uid': user.uid,
-        'name': name,
-        'email': email,
-        'phone': phone,
-        'createdAt': FieldValue.serverTimestamp(),
-      });
+        Get.snackbar(
+          "Success",
+          "Account created successfully",
+          snackPosition: SnackPosition.BOTTOM,
+        );
+
+        Get.offAll(() => Dashboard());
+      }
+    } on FirebaseAuthException catch (e) {
       Get.snackbar(
-        "Success",
-        "Account created successfully",
+        "Signup Failed",
+        e.message ?? "Something went wrong",
         snackPosition: SnackPosition.BOTTOM,
       );
-    } else {
-      Get.snackbar(
-        "Error",
-        "Something went wrong. Please try again.",
-        snackPosition: SnackPosition.BOTTOM,
-      );
+    } catch (e) {
+      Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM);
+      print("Error signing up: $e");
     }
   }
 }
