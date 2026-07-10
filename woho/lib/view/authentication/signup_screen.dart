@@ -15,8 +15,6 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 28),
@@ -186,13 +184,16 @@ class SignUpScreen extends StatelessWidget {
                   height: 56,
                   child: OutlinedButton.icon(
                     onPressed: () {},
-                    icon: Image.asset(
-                      "asset/icons/google_logo.jpg",
-                      height: 24,
+                    icon: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.asset(
+                        "asset/icons/google_logo.jpg",
+                        height: 24,
+                      ),
                     ),
                     label: const Text(
                       "Sign up with Google",
-                      style: TextStyle(color: Colors.black87),
+                      style: TextStyle(color: Colors.white),
                     ),
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(color: Colors.grey.shade300),

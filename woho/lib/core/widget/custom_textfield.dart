@@ -35,7 +35,7 @@ class CustomTextField extends StatelessWidget {
         decoration: InputDecoration(
           hintText: hintText,
           filled: true,
-          fillColor: Colors.grey.shade100,
+          fillColor: Colors.black,
           contentPadding: const EdgeInsets.symmetric(
             vertical: 18,
             horizontal: 16,
@@ -59,7 +59,7 @@ class CustomTextField extends StatelessWidget {
         hintText: hintText,
         prefixIcon: Icon(prefixIcon),
         filled: true,
-        fillColor: Colors.grey.shade100,
+        fillColor: Colors.black,
         contentPadding: const EdgeInsets.symmetric(
           vertical: 18,
           horizontal: 16,

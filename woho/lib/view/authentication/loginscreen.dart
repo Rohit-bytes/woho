@@ -13,8 +13,6 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 28),
@@ -130,13 +128,16 @@ class LoginScreen extends StatelessWidget {
                   width: double.infinity,
                   child: OutlinedButton.icon(
                     onPressed: () {},
-                    icon: Image.asset(
-                      "asset/icons/google_logo.jpg",
-                      height: 24,
+                    icon: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.asset(
+                        "asset/icons/google_logo.jpg",
+                        height: 24,
+                      ),
                     ),
                     label: const Text(
                       "Continue with Google",
-                      style: TextStyle(color: Colors.black87),
+                      style: TextStyle(color: Colors.white),
                     ),
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(color: Colors.grey.shade300),
