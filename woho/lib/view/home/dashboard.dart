@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:woho/core/colorpallete.dart';
 import 'package:woho/view/home/find_people_screen.dart';
 import 'package:woho/view/home/home_screen.dart';
 import 'package:woho/view/home/profile_screen.dart';
@@ -16,9 +17,12 @@ class Dashboard extends StatelessWidget {
           body: homeController.screens[homeController.selectedIndex],
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.shifting,
-            iconSize: homeController.selectedIndex == 0 ? 30 : 24,
             showSelectedLabels: false,
+            currentIndex: homeController.selectedIndex,
             showUnselectedLabels: false,
+            selectedItemColor: ColorPalette.primary,
+            unselectedItemColor: Colors.grey,
+
             onTap: (index) {
               homeController.onItemTapped(index);
             },
