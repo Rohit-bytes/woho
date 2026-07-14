@@ -7,6 +7,8 @@ class CustomTextField extends StatelessWidget {
   final bool obscureText;
   final TextEditingController controller;
   final TextInputType keyboardType;
+  final int maxlength;
+  final bool showCounter;
 
   /// Set true for phone number field
   final bool isPhoneNumber;
@@ -19,6 +21,8 @@ class CustomTextField extends StatelessWidget {
     required this.hintText,
     required this.prefixIcon,
     required this.controller,
+    this.showCounter = false,
+    this.maxlength = 100,
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
     this.isPhoneNumber = false,
@@ -53,12 +57,17 @@ class CustomTextField extends StatelessWidget {
 
     return TextField(
       controller: controller,
+      maxLength: maxlength,
+      autocorrect: true,
+
       keyboardType: keyboardType,
       obscureText: obscureText,
       decoration: InputDecoration(
         hintText: hintText,
+
         prefixIcon: Icon(prefixIcon),
         filled: true,
+        counterText: showCounter ? null : "",
         fillColor: Colors.black,
         contentPadding: const EdgeInsets.symmetric(
           vertical: 18,
