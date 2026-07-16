@@ -4,6 +4,6 @@ import 'package:woho/viewmodel/home_controller.dart';
 class InitialBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<HomeController>(() => HomeController());
+    Get.lazyPut<HomeController>(() => HomeController(), fenix: true);
   }
 }

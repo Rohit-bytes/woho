@@ -16,7 +16,7 @@ class Dashboard extends StatelessWidget {
         return Scaffold(
           body: homeController.screens[homeController.selectedIndex],
           bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.shifting,
+            // type: BottomNavigationBarType.shifting,
             showSelectedLabels: false,
             currentIndex: homeController.selectedIndex,
             showUnselectedLabels: false,

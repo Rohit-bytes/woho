@@ -64,7 +64,7 @@ class AuthenticationService {
         .signInWithEmailAndPassword(email: email, password: password)
         .then((value) {
           print("Signed in successfully");
-          Get.offAll(() => Dashboard());
+          Get.to(() => Dashboard());
         })
         .catchError((error) {
           print("Error signing in: $error");
