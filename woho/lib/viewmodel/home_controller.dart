@@ -17,6 +17,7 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     loadUserData();
+    allUser();
   }
 
   final List<Widget> screens = const [
@@ -43,6 +44,22 @@ class HomeController extends GetxController {
     if (image != null) {
       profileImage = File(image.path);
       update();
+    }
+  }
+
+  List<UserModel> usersList = [];
+
+  Future<void> allUser() async {
+    try {
+      final userdata = await AuthenticationService().listOfUsers();
+
+      usersList = userdata;
+
+      print("All users list: $usersList");
+
+      update();
+    } catch (e) {
+      print("Error fetching users: $e");
     }
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:woho/core/widget/custom_button.dart';
 import 'package:woho/core/widget/custom_textfield.dart';
+import 'package:woho/core/widget/customutils.dart';
 import 'package:woho/services/authentication_service.dart';
 import 'package:woho/viewmodel/home_controller.dart';
 
@@ -22,7 +23,9 @@ class SignUpScreen extends StatelessWidget {
         return Scaffold(
           body: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 28),
+              padding: EdgeInsets.symmetric(
+                horizontal: customutils().paddingspace,
+              ),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

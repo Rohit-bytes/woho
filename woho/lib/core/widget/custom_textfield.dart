@@ -9,6 +9,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final int maxlength;
   final bool showCounter;
+  final double? borderradius;
 
   /// Set true for phone number field
   final bool isPhoneNumber;
@@ -21,6 +22,7 @@ class CustomTextField extends StatelessWidget {
     required this.hintText,
     required this.prefixIcon,
     required this.controller,
+    this.borderradius,
     this.showCounter = false,
     this.maxlength = 100,
     this.obscureText = false,
@@ -74,7 +76,7 @@ class CustomTextField extends StatelessWidget {
           horizontal: 16,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(borderradius ?? 18),
           borderSide: BorderSide.none,
         ),
       ),

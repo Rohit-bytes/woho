@@ -63,6 +63,25 @@ class AuthenticationService {
     return null;
   }
 
+  Future<List<UserModel>> listOfUsers() async {
+    User? currentUser = _auth.currentUser;
+
+    if (currentUser == null) {
+      return [];
+    }
+
+    try {
+      QuerySnapshot snapshot = await _firestore.collection("users").get();
+
+      return snapshot.docs
+          .map((doc) => UserModel.fromMap(doc.data() as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      print("Error fetching users: $e");
+      return [];
+    }
+  }
+
   void signin(String email, String password, BuildContext context) {
     _auth
         .signInWithEmailAndPassword(email: email, password: password)

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:woho/core/widget/custom_button.dart';
 import 'package:woho/core/widget/custom_textfield.dart';
+import 'package:woho/core/widget/customutils.dart';
 import 'package:woho/services/authentication_service.dart';
 import 'package:woho/view/authentication/signup_screen.dart';
 
@@ -15,7 +16,7 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28),
+          padding: EdgeInsets.symmetric(horizontal: customutils().paddingspace),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
