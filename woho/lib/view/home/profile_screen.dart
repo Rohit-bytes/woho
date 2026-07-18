@@ -59,11 +59,20 @@ class ProfileScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(18),
                       color: ColorPalette.primary.withOpacity(0.2),
                     ),
-                    child: Icon(
-                      Icons.emoji_emotions_rounded,
-                      size: 200,
-                      color: ColorPalette.primary,
-                    ),
+                    child:
+                        (homeController.userData?.photoUrl?.isNotEmpty ?? false)
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(18),
+                            child: Image.network(
+                              "${homeController.userData!.photoUrl}",
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : Icon(
+                            Icons.emoji_emotions_rounded,
+                            size: 200,
+                            color: ColorPalette.primary,
+                          ),
                   ),
                   SizedBox(height: 20),
                   Row(

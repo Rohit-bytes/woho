@@ -65,50 +65,63 @@ class SignUpScreen extends StatelessWidget {
                     ),
 
                     const SizedBox(height: 35),
-                    Center(
-                      child: GestureDetector(
-                        onTap: () {
-                          // Handle profile picture selection
-                          Get.find<HomeController>().openCamera();
-                        },
-                        child: Container(
-                          width: 100,
-                          height: 100,
-                          child: homeController.profileImage != null
-                              ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(28),
-                                  child: Image.file(
-                                    homeController.profileImage!,
-                                    fit: BoxFit.cover,
-                                  ),
-                                )
-                              : Icon(
-                                  Icons.emoji_emotions_rounded,
-                                  size: 80,
-                                  color: Colors.grey.shade400,
-                                ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(28),
-                            color: const Color(0xff6C63FF).withOpacity(.1),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              CustomTextField(
+                                controller: name,
+                                hintText: "Full Name",
+                                prefixIcon: Icons.person_outline,
+                              ),
+
+                              const SizedBox(height: 18),
+                              CustomTextField(
+                                controller: bio,
+                                hintText: "Bio",
+                                prefixIcon: Icons.info_outline,
+                                maxlength: 150,
+                                showCounter: true,
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 35),
-                    CustomTextField(
-                      controller: name,
-                      hintText: "Full Name",
-                      prefixIcon: Icons.person_outline,
-                    ),
-
-                    const SizedBox(height: 18),
-                    CustomTextField(
-                      controller: bio,
-                      hintText: "Bio",
-                      prefixIcon: Icons.info_outline,
-                      maxlength: 150,
-                      showCounter: true,
+                        SizedBox(width: 15),
+                        Center(
+                          child: GestureDetector(
+                            onTap: () {
+                              // Handle profile picture selection
+                              Get.find<HomeController>().openCamera();
+                            },
+                            child: Container(
+                              width: 120,
+                              height: 120,
+                              child: homeController.profileImage != null
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(28),
+                                      child: Image.file(
+                                        homeController.profileImage!,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                  : Icon(
+                                      Icons.emoji_emotions_rounded,
+                                      size: 80,
+                                      color: Colors.grey.shade400,
+                                    ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(28),
+                                color: const Color(0xff6C63FF).withOpacity(.1),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
 
                     const SizedBox(height: 18),
@@ -207,12 +220,21 @@ class SignUpScreen extends StatelessWidget {
                           );
                           return;
                         }
+                        if (homeController.profileImage == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Please upload a profile image"),
+                            ),
+                          );
+                          return;
+                        }
                         AuthenticationService().signup(
                           name: name.text.trim(),
                           email: email.text.trim(),
                           phone: phone.text.trim(),
                           bio: bio.text.trim(),
                           password: password.text.trim(),
+                          profileImage: homeController.profileImage,
                         );
                       },
                     ),
