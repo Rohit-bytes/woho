@@ -22,7 +22,7 @@ class CustomHomePageProfiles extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: GestureDetector(
                 onTap: () => Get.to(
-                  OtherUserProfileScreen(
+                  () => OtherUserProfileScreen(
                     uuid: userProfile?.uuid ?? "",
                     userEmail: userProfile?.email ?? "",
                     userImage: userProfile?.picture.large ?? "",

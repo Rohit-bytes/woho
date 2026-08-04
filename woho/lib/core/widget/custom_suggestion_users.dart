@@ -5,6 +5,7 @@ class SuggestionUserWidget extends StatefulWidget {
   final String userimage;
   final String username;
   final String useremail;
+  final String useruuid;
   final VoidCallback? onProfileTap;
   final VoidCallback? onFollowTap;
 
@@ -13,6 +14,7 @@ class SuggestionUserWidget extends StatefulWidget {
     required this.userimage,
     required this.username,
     required this.useremail,
+    required this.useruuid,
     this.onProfileTap,
     this.onFollowTap,
   });
@@ -103,7 +105,7 @@ class _SuggestionUserWidgetState extends State<SuggestionUserWidget>
                   // PROFILE IMAGE
                   // ==============================
                   Hero(
-                    tag: "suggestion_${widget.useremail}",
+                    tag: "suggestion_${widget.useruuid}",
                     child: Container(
                       height: 78,
                       width: 78,
