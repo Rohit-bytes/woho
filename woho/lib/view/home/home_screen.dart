@@ -35,17 +35,42 @@ class HomeScreen extends StatelessWidget {
           //     ),
           //   ],
           // ),
-          body: SingleChildScrollView(
-            child: SafeArea(
-              child: Padding(
-                padding: EdgeInsets.all(customutils().paddingspace),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [CustomHomePageProfiles()],
+          body: homeController.isloading == true
+              ? Center(child: CircularProgressIndicator())
+              : RefreshIndicator(
+                  onRefresh: () {
+                    return Future.delayed(const Duration(seconds: 3), () {
+                      homeController.alldata();
+                    });
+                  },
+                  child: SingleChildScrollView(
+                    child: SafeArea(
+                      child: Padding(
+                        padding: EdgeInsets.all(customutils().paddingspace),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset("asset/woho_logo.png", height: 30),
+                                Text(
+                                  "Welcome ${homeController.userData?.name ?? ''}",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: customutils().sizedboxheight),
+                            CustomHomePageProfiles(),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
         );
       },
     );

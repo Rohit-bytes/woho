@@ -20,6 +20,7 @@ class User {
   final String cell;
   final Picture picture;
   final Dob dob;
+  final String uuid; // Added
 
   User({
     required this.gender,
@@ -29,6 +30,7 @@ class User {
     required this.cell,
     required this.picture,
     required this.dob,
+    required this.uuid,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -40,6 +42,7 @@ class User {
       cell: json['cell'],
       picture: Picture.fromJson(json['picture']),
       dob: Dob.fromJson(json['dob']),
+      uuid: json['login']['uuid'], // Added
     );
   }
 }

@@ -77,7 +77,6 @@ class _ProfileScreenState extends State<ProfileScreen>
               ),
             ],
           ),
-
           body: SafeArea(
             child: FadeTransition(
               opacity: _fadeAnimation,

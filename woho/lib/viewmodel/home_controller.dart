@@ -17,20 +17,24 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    loadUserData();
-    allUser();
-    Userprofiledata();
+    alldata();
   }
 
-  List matchpercentage = [
-    80,
-    75,
-    90,
-    48,
-    39,
-    69,
-    98,
-  ]; // Example match percentages
+  void alldata() async {
+    setLoading(true);
+    loadUserData();
+    await allUser();
+    await Userprofiledata();
+    setLoading(false);
+  }
+
+  bool isloading = false;
+  void setLoading(bool value) {
+    isloading = value;
+    update();
+  }
+
+  List matchpercentage = [80, 75, 90, 48, 39, 69, 98];
   final List<Widget> screens = const [
     HomeScreen(),
     FindPeopleScreen(),

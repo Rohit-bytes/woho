@@ -1,7 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:woho/core/colorpallete.dart';
 
-class CustomButton extends StatelessWidget {
+class CustomBackButton extends StatelessWidget {
   final double? height;
   final double? width;
   final double radius;
@@ -19,17 +21,17 @@ class CustomButton extends StatelessWidget {
 
   final VoidCallback? onTap;
 
-  const CustomButton({
+  const CustomBackButton({
     super.key,
-    this.height = 45,
-    this.width,
-    this.radius = 14,
+    this.height = 50,
+    this.width = 50,
+    this.radius = 50,
     this.icon,
-    this.iconSize = 22,
+    this.iconSize = 16,
     this.text,
-    this.backgroundColor = Colors.black,
+    this.backgroundColor = Colors.white,
     this.foregroundColor = Colors.white,
-    this.borderColor = Colors.transparent,
+    this.borderColor = Colors.white,
     this.borderWidth = 1,
     this.onTap,
   });
@@ -38,51 +40,42 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        height: height,
-        width: width,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              ColorPalette.secondary,
-              ColorPalette.primary,
-              const Color.fromARGB(255, 57, 218, 17),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(radius),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+          child: Container(
+            height: height,
+            width: width,
+            padding: const EdgeInsets.symmetric(horizontal: 0),
+            decoration: BoxDecoration(
+              color: backgroundColor.withValues(alpha: 0.15),
+              borderRadius: BorderRadius.circular(radius),
+              border: Border.all(
+                color: borderColor.withValues(alpha: 0.25),
+                width: borderWidth,
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (text != null)
+                  Text(
+                    text!,
+                    style: TextStyle(
+                      color: foregroundColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+
+                if (text != null && icon != null) const SizedBox(width: 8),
+
+                if (icon != null)
+                  Icon(icon, size: iconSize, color: foregroundColor),
+              ],
+            ),
           ),
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(radius),
-          border: Border.all(color: borderColor, width: borderWidth),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Text first
-            if (text != null)
-              Text(
-                text!,
-                style: TextStyle(
-                  color: foregroundColor,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-
-            // Gap between text and icon
-            if (text != null && icon != null) const SizedBox(width: 8),
-
-            // Icon after text
-            if (icon != null)
-              Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                ),
-                child: Icon(icon, size: iconSize, color: ColorPalette.primary),
-              ),
-          ],
         ),
       ),
     );

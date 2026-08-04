@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:woho/core/colorpallete.dart';
+import 'package:woho/view/home/other_user_profile.dart';
+import 'package:woho/view/home/profile_screen.dart';
 import 'package:woho/viewmodel/home_controller.dart';
 
 class CustomHomePageProfiles extends StatelessWidget {
@@ -19,7 +21,15 @@ class CustomHomePageProfiles extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: GestureDetector(
-                onTap: () => Get.toNamed('/profile', arguments: userProfile),
+                onTap: () => Get.to(
+                  OtherUserProfileScreen(
+                    uuid: userProfile?.uuid ?? "",
+                    userEmail: userProfile?.email ?? "",
+                    userImage: userProfile?.picture.large ?? "",
+                    userName:
+                        "${userProfile?.name.first} ${userProfile?.name.last}",
+                  ),
+                ),
                 child: Container(
                   decoration: BoxDecoration(
                     color: ColorPalette.primary,
@@ -111,7 +121,7 @@ class CustomHomePageProfiles extends StatelessWidget {
                             bottomRight: Radius.circular(20),
                           ),
                           child: Image.network(
-                            height: 500,
+                            height: 400,
                             width: double.infinity,
                             userProfile!.picture.large ?? '',
                             fit: BoxFit.fill,
