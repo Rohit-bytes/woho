@@ -4,12 +4,14 @@ import 'package:woho/core/colorpallete.dart';
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool showBackButton;
+  final bool centerTitle;
   final List<Widget>? actions;
 
   const CustomAppbar({
     super.key,
     required this.title,
     this.showBackButton = false,
+    this.centerTitle = true, // Default centered
     this.actions,
   });
 
@@ -19,17 +21,21 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: false,
       surfaceTintColor: Colors.transparent,
       backgroundColor: ColorPalette.primary,
+
       leading: showBackButton
           ? IconButton(
               icon: const Icon(Icons.arrow_back_ios_new_rounded),
               onPressed: () => Navigator.pop(context),
             )
           : null,
+
       title: Text(
         title,
         style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
-      centerTitle: true,
+
+      centerTitle: centerTitle,
+
       actions: actions,
     );
   }

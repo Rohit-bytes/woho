@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:woho/binding.dart';
 import 'package:woho/firebase_options.dart';
@@ -8,6 +9,9 @@ import 'package:woho/view/authentication/splash_screen.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  Stripe.publishableKey =
+      "pk_test_51TvyHQLEQhp9bxkW68UkUF0bUtjQmzf5P3LrniM5WMtOSuRqEhNeRCzYafXOPj0gW6RKx14NzFHqjE4UjAO0XXNo00zSCxSyZJ";
+  await Stripe.instance.applySettings();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }

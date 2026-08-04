@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:woho/model/user_model.dart';
+import 'package:woho/model/user_post_model.dart' show UserPostModel;
 import 'package:woho/view/authentication/loginscreen.dart';
 import 'package:woho/view/home/dashboard.dart';
 
@@ -192,5 +193,17 @@ class AuthenticationService {
       print('Cloudinary upload failed: $error');
       return null;
     }
+  }
+
+  Future<UserPostModel> getUserPost() async {
+    final response = await http.get(
+      Uri.parse('https://randomuser.me/api/?results=100'),
+    );
+
+    if (response.statusCode == 200) {
+      return UserPostModel.fromJson(jsonDecode(response.body));
+    }
+
+    throw Exception('Failed to load user');
   }
 }

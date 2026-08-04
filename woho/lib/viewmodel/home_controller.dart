@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:woho/model/user_model.dart';
+import 'package:woho/model/user_post_model.dart' show UserPostModel;
 import 'package:woho/services/authentication_service.dart';
 import 'package:woho/view/home/find_people_screen.dart';
 import 'package:woho/view/home/home_screen.dart';
@@ -18,8 +19,18 @@ class HomeController extends GetxController {
     super.onInit();
     loadUserData();
     allUser();
+    Userprofiledata();
   }
 
+  List matchpercentage = [
+    80,
+    75,
+    90,
+    48,
+    39,
+    69,
+    98,
+  ]; // Example match percentages
   final List<Widget> screens = const [
     HomeScreen(),
     FindPeopleScreen(),
@@ -48,6 +59,7 @@ class HomeController extends GetxController {
   }
 
   List<UserModel> usersList = [];
+  List<UserModel> randomUsersList = [];
 
   Future<void> allUser() async {
     try {
@@ -55,11 +67,27 @@ class HomeController extends GetxController {
 
       usersList = userdata;
 
+      // Create a separate random list
+      randomUsersList = List<UserModel>.from(userdata)..shuffle();
+
       print("All users list: $usersList");
+      print("Random users list: $randomUsersList");
 
       update();
     } catch (e) {
       print("Error fetching users: $e");
+    }
+  }
+
+  UserPostModel? userProfileData;
+  Future<void> Userprofiledata() async {
+    try {
+      final userProfile = await AuthenticationService().getUserPost();
+      userProfileData = userProfile;
+      ;
+      update();
+    } on Exception catch (e) {
+      // TODO
     }
   }
 }
