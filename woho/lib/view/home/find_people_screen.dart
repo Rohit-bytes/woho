@@ -92,10 +92,23 @@ class FindPeopleScreen extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: CustomUserprofileWidget(
-                            useremail: homeController.usersList[index].email,
-                            userimage: homeController.usersList[index].photoUrl,
-                            username: homeController.usersList[index].name,
+                          child: GestureDetector(
+                            onTap: () => Get.to(
+                              () => OtherUserProfileScreen(
+                                uuid: homeController.usersList[index].uid,
+                                userEmail:
+                                    homeController.usersList[index].email,
+                                userImage:
+                                    homeController.usersList[index].photoUrl,
+                                userName: homeController.usersList[index].name,
+                              ),
+                            ),
+                            child: CustomUserprofileWidget(
+                              useremail: homeController.usersList[index].email,
+                              userimage:
+                                  homeController.usersList[index].photoUrl,
+                              username: homeController.usersList[index].name,
+                            ),
                           ),
                         );
                       },

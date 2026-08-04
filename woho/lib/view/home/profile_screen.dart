@@ -5,6 +5,7 @@ import 'package:woho/core/widget/custom_appbar.dart';
 import 'package:woho/core/widget/custom_userprofile_widget.dart';
 import 'package:woho/core/widget/customutils.dart';
 import 'package:woho/services/authentication_service.dart';
+import 'package:woho/view/home/other_user_profile.dart';
 import 'package:woho/viewmodel/home_controller.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -285,26 +286,36 @@ class _ProfileScreenState extends State<ProfileScreen>
                           itemBuilder: (context, index) {
                             final user = homeController.usersList[index];
 
-                            return TweenAnimationBuilder<double>(
-                              tween: Tween(begin: 0.9, end: 1),
-                              duration: Duration(
-                                milliseconds: 400 + (index * 100),
+                            return GestureDetector(
+                              onTap: () => Get.to(
+                                () => OtherUserProfileScreen(
+                                  uuid: user.uid,
+                                  userEmail: user.email,
+                                  userImage: user.photoUrl,
+                                  userName: user.name,
+                                ),
                               ),
-                              curve: Curves.easeOutBack,
-                              builder: (context, value, child) {
-                                return Transform.scale(
-                                  scale: value,
-                                  alignment: Alignment.centerLeft,
-                                  child: child,
-                                );
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 12),
-                                child: CustomUserprofileWidget(
-                                  isHorizontal: true,
-                                  useremail: user.email,
-                                  userimage: user.photoUrl,
-                                  username: user.name,
+                              child: TweenAnimationBuilder<double>(
+                                tween: Tween(begin: 0.9, end: 1),
+                                duration: Duration(
+                                  milliseconds: 400 + (index * 100),
+                                ),
+                                curve: Curves.easeOutBack,
+                                builder: (context, value, child) {
+                                  return Transform.scale(
+                                    scale: value,
+                                    alignment: Alignment.centerLeft,
+                                    child: child,
+                                  );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 12),
+                                  child: CustomUserprofileWidget(
+                                    isHorizontal: true,
+                                    useremail: user.email,
+                                    userimage: user.photoUrl,
+                                    username: user.name,
+                                  ),
                                 ),
                               ),
                             );

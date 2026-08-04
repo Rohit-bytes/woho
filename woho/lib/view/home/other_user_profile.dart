@@ -6,6 +6,9 @@ import 'package:woho/core/widget/custom_backbutton.dart';
 import 'package:woho/core/widget/custom_userprofile_widget.dart';
 import 'package:woho/core/widget/customutils.dart';
 import 'package:woho/services/authentication_service.dart';
+import 'package:woho/view/home/dashboard.dart';
+import 'package:woho/view/home/home_screen.dart';
+import 'package:woho/view/home/profile_screen.dart';
 import 'package:woho/viewmodel/home_controller.dart';
 
 class OtherUserProfileScreen extends StatefulWidget {
@@ -104,7 +107,11 @@ class _OtherUserProfileScreenState extends State<OtherUserProfileScreen>
                     children: [
                       CustomBackButton(
                         onTap: () {
-                          Get.back();
+                          if (Get.key.currentState?.canPop() ?? false) {
+                            Get.back();
+                          } else {
+                            Get.offAll(() => Dashboard());
+                          }
                         },
                         icon: Icons.arrow_back_ios,
                       ),
@@ -300,26 +307,36 @@ class _OtherUserProfileScreenState extends State<OtherUserProfileScreen>
                           itemBuilder: (context, index) {
                             final user = homeController.usersList[index];
 
-                            return TweenAnimationBuilder<double>(
-                              tween: Tween(begin: 0.9, end: 1),
-                              duration: Duration(
-                                milliseconds: 400 + (index * 100),
+                            return GestureDetector(
+                              onTap: () => Get.offAll(
+                                () => OtherUserProfileScreen(
+                                  uuid: user.uid,
+                                  userEmail: user.email,
+                                  userImage: user.photoUrl,
+                                  userName: user.name,
+                                ),
                               ),
-                              curve: Curves.easeOutBack,
-                              builder: (context, value, child) {
-                                return Transform.scale(
-                                  scale: value,
-                                  alignment: Alignment.centerLeft,
-                                  child: child,
-                                );
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 12),
-                                child: CustomUserprofileWidget(
-                                  isHorizontal: true,
-                                  useremail: user.email,
-                                  userimage: user.photoUrl,
-                                  username: user.name,
+                              child: TweenAnimationBuilder<double>(
+                                tween: Tween(begin: 0.9, end: 1),
+                                duration: Duration(
+                                  milliseconds: 400 + (index * 100),
+                                ),
+                                curve: Curves.easeOutBack,
+                                builder: (context, value, child) {
+                                  return Transform.scale(
+                                    scale: value,
+                                    alignment: Alignment.centerLeft,
+                                    child: child,
+                                  );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 12),
+                                  child: CustomUserprofileWidget(
+                                    isHorizontal: true,
+                                    useremail: user.email,
+                                    userimage: user.photoUrl,
+                                    username: user.name,
+                                  ),
                                 ),
                               ),
                             );
